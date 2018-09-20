@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +59,7 @@ public class NewSocialActivity extends AppCompatActivity {
             //Question 3: generate a key below to use as a unique identifier for the message, and
             // for the image filename
             final String key = ref.child("socials").push().getKey();
-            StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://fir-demo-df3ae.appspot.com");
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             StorageReference picref = storageRef.child(key + ".png");
 
 
@@ -71,12 +73,11 @@ public class NewSocialActivity extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    int interest =;
-                    String firebaseImageUrl=;
-                    String email=;
-                    String name =;
-                    String description =;
-                    Social social = new Social(interest, firebaseImageUrl, email, name, description);
+                    int interest = 0;
+                    String email= ((EditText) findViewById(R.id.emailText)).getText().toString();
+                    String name =((EditText) findViewById(R.id.nameText)).getText().toString();;
+                    String description = ((EditText) findViewById(R.id.descriptionText)).getText().toString();;
+                    Social social = new Social(interest, key, email, name, description);
                     ref.child("socials").child(key).setValue(social);
                     startActivity(new Intent(NewSocialActivity.this, ListActivity.class));
                 }

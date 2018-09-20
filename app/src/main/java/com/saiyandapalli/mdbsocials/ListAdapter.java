@@ -68,7 +68,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
             this.emailView = (TextView) view.findViewById(R.id.emailView);
             this.nameView = (TextView) view.findViewById(R.id.emailloginView);
             this.interestView = (TextView) view.findViewById(R.id.interestView);
-            this.descriptionView = (TextView) view.findViewById(R.id.descriptionView);
+//            this.descriptionView = (TextView) view.findViewById(R.id.descriptionView);
             this.imageView = (ImageView) view.findViewById(R.id.imageView);
         }
     }
