@@ -34,7 +34,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
-            android:id="@+id/nameView"
+            android:id="@+id/emailloginView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/interestView"
-            app:layout_constraintTop_toBottomOf="@+id/nameView" />
+            app:layout_constraintTop_toBottomOf="@+id/emailloginView" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

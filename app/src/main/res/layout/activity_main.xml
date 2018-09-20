@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/nameView"
+        android:id="@+id/emailloginView"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,10 +60,10 @@
         android:ems="10"
         android:id="@+id/passwordView"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/nameView"
+        app:layout_constraintTop_toBottomOf="@+id/emailloginView"
         android:hint="Password"
-        app:layout_constraintRight_toRightOf="@+id/nameView"
-        app:layout_constraintLeft_toLeftOf="@+id/nameView" />
+        app:layout_constraintRight_toRightOf="@+id/emailloginView"
+        app:layout_constraintLeft_toLeftOf="@+id/emailloginView" />
 
     <Button
         android:text="Log In"

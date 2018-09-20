@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attemptLogin() {
-        String email = ((EditText) findViewById(R.id.nameView)).getText().toString();
+        String email = ((EditText) findViewById(R.id.emailloginView)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordView)).getText().toString();
         if (!email.equals("") && !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password)
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attemptSignup() {
-        String email = ((EditText) findViewById(R.id.nameView)).getText().toString();
+        String email = ((EditText) findViewById(R.id.emailloginView)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordView)).getText().toString();
 
         if (!email.equals("") && !password.equals("")) {

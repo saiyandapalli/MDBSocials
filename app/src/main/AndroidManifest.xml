@@ -26,6 +26,10 @@
         <activity
             android:name=".NewSocial"
             android:label="@string/title_activity_new_social"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewSocialActivity"
+            android:label="@string/title_activity_new_social"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -44,7 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
 
         //haven't taught this yet but essentially it runs separately from the UI
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(m.firebaseImageUrl + ".png");
-//        Glide.with(context).using(new FirebaseImageLoader()).load(storageReference).into(holder.imageView);
+        Glide.with(context).using(new FirebaseImageLoader()).load(storageReference).into(holder.imageView);
     }
 
 
@@ -57,12 +57,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
      * A card displayed in the RecyclerView
      */
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        TextView msgView;
+        TextView emailView;
+        TextView nameView;
+        TextView interestView;
+        TextView descriptionView;
         ImageView imageView;
 
         public CustomViewHolder (View view) {
             super(view);
-            this.msgView = (TextView) view.findViewById(R.id.interestView);
+            this.emailView = (TextView) view.findViewById(R.id.emailView);
+            this.nameView = (TextView) view.findViewById(R.id.emailloginView);
+            this.interestView = (TextView) view.findViewById(R.id.interestView);
+            this.descriptionView = (TextView) view.findViewById(R.id.descriptionView);
             this.imageView = (ImageView) view.findViewById(R.id.imageView);
         }
     }
