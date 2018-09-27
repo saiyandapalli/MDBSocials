@@ -31,17 +31,11 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView recyclerAdapter = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerAdapter.setLayoutManager(new LinearLayoutManager(this));
 
-
-        //Part 2: implement getList
-        //Question 1: add Firebase Realtime Database to your project
         recyclerAdapter.setAdapter(adapter);
-        //Question 2: initialize the messages based on what is in the database
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("yeetus", "in value event listener");
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
                 socials.clear();
                 for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
                     socials.add(dataSnapshot2.getValue(Social.class));
@@ -51,7 +45,6 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
                 Log.w("oh no it didnt work", "Failed to read value.", error.toException());
             }
         });

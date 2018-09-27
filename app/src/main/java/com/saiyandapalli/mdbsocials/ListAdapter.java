@@ -82,7 +82,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
                     m.interested = false;
                     m.interest = m.interest - 1;
                 }
-                ref.child("socials").child(m.firebaseImageUrl).setValue(m);
+//                ref.child("socials").child(m.firebaseImageUrl).child("interested").setValue(m.interested);
+//                ref.child("socials").child(m.firebaseImageUrl).child("interest").setValue(m.interest);
                 notifyDataSetChanged();
             }
         });
@@ -131,10 +132,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
             this.imageView = (ImageView) view.findViewById(R.id.imageView);
             this.descriptionView = (TextView) view.findViewById(R.id.descriptionView);
             this.interestCheckView = (CheckBox) view.findViewById(R.id.interestCheckView);
+            interestCheckView.setVisibility(View.GONE);
+            descriptionView.setVisibility(View.GONE);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(expanded || start) {
+                    if(expanded) {
                         expanded = false;
                         start = false;
                         interestCheckView.setVisibility(View.GONE);

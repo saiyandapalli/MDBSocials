@@ -25,13 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Part 1: Authentication
-        //Question 1: add Firebase Authentication to your project
-        //Question 2: create an instance variable for the FirebaseAuth and initialize it below
-
         mAuth = FirebaseAuth.getInstance();
 
-        //Question 3: create an instance variable to listen for the auth state. Log when the auth state changes
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -43,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d("You have signed out.", "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 
-        //Question 4 in attemptLogin()
+
         ((Button) findViewById(R.id.loginButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Question 5 in attemptSignup()
+
         ((Button) findViewById(R.id.signupButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Part 2 in ListActivity
     }
 
     private void attemptLogin() {
@@ -76,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d("Log in", "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 Log.w("Aww", "signInWithEmail:failed", task.getException());
                                 Toast.makeText(MainActivity.this, "Sign in failed!", Toast.LENGTH_SHORT).show();
@@ -101,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d("Yay", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 Log.d("Yay", task.getException().getMessage());
                                 Toast.makeText(MainActivity.this, "Failed Signup", Toast.LENGTH_SHORT).show();
