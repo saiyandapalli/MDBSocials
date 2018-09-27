@@ -77,7 +77,7 @@ public class NewSocialActivity extends AppCompatActivity {
                     String email= ((EditText) findViewById(R.id.emailText)).getText().toString();
                     String name =((EditText) findViewById(R.id.nameText)).getText().toString();;
                     String description = ((EditText) findViewById(R.id.descriptionText)).getText().toString();;
-                    Social social = new Social(interest, key, email, name, description);
+                    Social social = new Social(interest, key, email, name, description, false);
                     ref.child("socials").child(key).setValue(social);
                     startActivity(new Intent(NewSocialActivity.this, ListActivity.class));
                 }

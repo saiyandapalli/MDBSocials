@@ -9,13 +9,26 @@ public class Social implements Serializable{
     String email;
     String name;
     String description;
+    boolean interested;
 
-    public Social(Integer interest, String firebaseImageUrl, String email, String name, String description) {
+    public Social(){}
+
+
+    public boolean isInterested() {
+        return interested;
+    }
+
+    public void setInterested(boolean interested) {
+        this.interested = interested;
+    }
+
+    public Social(Integer interest, String firebaseImageUrl, String email, String name, String description, boolean interested) {
         this.interest = interest;
         this.email = email;
         this.name = name;
         this.description = description;
         this.firebaseImageUrl = firebaseImageUrl;
+        this.interested = interested;
     }
 
     public int getInterest() {

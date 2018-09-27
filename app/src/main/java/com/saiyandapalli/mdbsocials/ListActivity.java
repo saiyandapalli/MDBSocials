@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ListActivity extends AppCompatActivity {
     final ArrayList<Social> socials = new ArrayList<>();
     final ListAdapter adapter = new ListAdapter(this, socials);
-    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/messages");
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/socials");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,10 @@ public class ListActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("yeetus", "in value event listener");
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                socials.clear();
                 for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
                     socials.add(dataSnapshot2.getValue(Social.class));
                 }
@@ -63,10 +65,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        //Question 3: add an event listener for the children of the ref, and make it such that
-        // every time a message is added, it creates a new message, adds it to messages and updates
-        // the UI
 
-        //Next part in NewMessageActivity
     }
 }
