@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+
+import static com.saiyandapalli.mdbsocials.MainActivity.mAuth;
 
 public class NewSocialActivity extends AppCompatActivity {
 
@@ -65,8 +68,9 @@ public class NewSocialActivity extends AppCompatActivity {
                     String email= ((EditText) findViewById(R.id.emailText)).getText().toString();
                     String name =((EditText) findViewById(R.id.nameText)).getText().toString();;
                     String description = ((EditText) findViewById(R.id.descriptionText)).getText().toString();;
-                    Social social = new Social(interest, key, email, name, description, false);
+                    Social social = new Social(interest, key, email, name, description, new ArrayList<String>());
                     ref.child("socials").child(key).setValue(social);
+                    Log.d("Yeets", "we have pushed a social to the database");
                     startActivity(new Intent(NewSocialActivity.this, ListActivity.class));
                 }
             });

@@ -1,6 +1,7 @@
 package com.saiyandapalli.mdbsocials;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class Social implements Serializable{
@@ -9,35 +10,27 @@ public class Social implements Serializable{
     String email;
     String name;
     String description;
-    boolean interested;
+    ArrayList<String> usersliked;
 
     public Social(){}
 
-
-    public boolean isInterested() {
-        return interested;
+    public ArrayList<String> getUsersliked() {
+        return usersliked;
     }
 
-    public void setInterested(boolean interested) {
-        this.interested = interested;
+    public void setUsersliked(ArrayList<String> usersliked) {
+        this.usersliked = usersliked;
     }
 
-    public Social(Integer interest, String firebaseImageUrl, String email, String name, String description, boolean interested) {
+    public Social(Integer interest, String firebaseImageUrl, String email, String name, String description, ArrayList<String> usersliked) {
         this.interest = interest;
         this.email = email;
         this.name = name;
         this.description = description;
         this.firebaseImageUrl = firebaseImageUrl;
-        this.interested = interested;
+        this.usersliked = usersliked;
     }
 
-    public int getInterest() {
-        return interest;
-    }
-
-    public void setInterest(int interest) {
-        this.interest = interest;
-    }
 
     public String getFirebaseImageUrl() {
         return firebaseImageUrl;
@@ -70,4 +63,13 @@ public class Social implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Integer getInterest() {
+        return interest;
+    }
+
+    public void setInterest(Integer interest) {
+        this.interest = interest;
+    }
+
 }

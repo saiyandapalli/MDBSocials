@@ -1,6 +1,7 @@
 package com.saiyandapalli.mdbsocials;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -14,12 +15,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+
+import static com.saiyandapalli.mdbsocials.MainActivity.mAuth;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHolder> {
@@ -31,10 +37,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
     final int EXPANDED = 1;
     private int adapterPosition;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/socials");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReference("/users").child(mAuth.getCurrentUser().getUid()).child("interested");
+
 
     public ListAdapter(Context context, ArrayList<Social> data) {
         this.context = context;
         this.data = data;
+        myUserRef.child(mAuth.getCurrentUser().getUid()).keepSynced(true);
     }
 
     @Override
@@ -68,27 +77,64 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
         holder.nameView.setText(m.name);
         holder.interestView.setText(context.getString(R.string.interested, m.interest));
         holder.descriptionView.setText(m.description);
-        holder.interestCheckView.setChecked(m.interested);
         if (position == focusedItemIndex) {
             ((TextView) holder.container.findViewById(R.id.descriptionView)).setText(m.description);
         }
-        holder.interestCheckView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        myUserRef.child(mAuth.getCurrentUser().getUid()).keepSynced(true);
+        myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    m.interested = true;
-                    m.interest = m.interest + 1;
-                }else{
-                    m.interested = false;
-                    m.interest = m.interest - 1;
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("yeets", m.firebaseImageUrl);
+                if (dataSnapshot.hasChild(m.firebaseImageUrl)) {
+                    holder.interestCheckView.setChecked(true);
+                    Log.d("ppp", "onDataChange: ");
+                } else {
+                    holder.interestCheckView.setChecked(false);
                 }
-//                ref.child("socials").child(m.firebaseImageUrl).child("interested").setValue(m.interested);
-//                ref.child("socials").child(m.firebaseImageUrl).child("interest").setValue(m.interest);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        holder.interestCheckView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                String user = mAuth.getCurrentUser().getUid();
+//                if(isChecked){
+//                    m.interest = m.interest + 1;
+//                }else{
+//                    m.interest = m.interest - 1;
+//                }
+//                ref.child(m.firebaseImageUrl).child("interest").setValue(m.interest);
+//                String key = myUserRef.push().getKey();
+//                myUserRef.child(key).setValue(m.firebaseImageUrl);
+//                notifyDataSetChanged();
+//            }
+//        });
+
+        holder.interestCheckView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox checkBox = (CheckBox)v;
+                if(checkBox.isChecked()){
+                    m.interest = m.interest + 1;
+                    checkBox.setChecked(true);
+                    ref.child(m.firebaseImageUrl).child("interest").setValue(m.interest);
+                    myUserRef.child(m.firebaseImageUrl).setValue("");
+                }else{
+                    m.interest = m.interest - 1;
+                    checkBox.setChecked(false);
+                    ref.child(m.firebaseImageUrl).child("interest").setValue(m.interest);
+                    myUserRef.child(m.firebaseImageUrl).removeValue();
+                }
+//                String key = myUserRef.push().getKey();
                 notifyDataSetChanged();
             }
         });
 
-        //haven't taught this yet but essentially it runs separately from the UI
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(m.firebaseImageUrl + ".png");
         Glide.with(context).using(new FirebaseImageLoader()).load(storageReference).into(holder.imageView);
     }

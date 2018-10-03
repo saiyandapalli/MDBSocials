@@ -1,6 +1,7 @@
 package com.saiyandapalli.mdbsocials;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +20,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.saiyandapalli.mdbsocials.MainActivity.mAuth;
+
 public class ListActivity extends AppCompatActivity {
     final ArrayList<Social> socials = new ArrayList<>();
     final ListAdapter adapter = new ListAdapter(this, socials);
+    public ArrayList<String> socialsImInterestedIn = new ArrayList<>();
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/socials");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReference("/users").child(mAuth.getCurrentUser().getUid()).child("interested");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,20 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w("oh no it didnt work", "Failed to read value.", error.toException());
+            }
+        });
+        myUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                socialsImInterestedIn.clear();
+                for (DataSnapshot socialid : dataSnapshot.getChildren()) {
+                    socialsImInterestedIn.add(socialid.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
