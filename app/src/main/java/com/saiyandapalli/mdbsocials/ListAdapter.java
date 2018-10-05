@@ -49,28 +49,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_view, parent, false);
-//        Log.d("os", ""+viewType);
-//        if (viewType == EXPANDED){
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_view, parent, false);
-//        }
         return new CustomViewHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(final CustomViewHolder holder, final int position) {
-//        holder.container.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(position == focusedItemIndex){
-//                    focusedItemIndex = -1;
-//                }else{
-//                    focusedItemIndex = position;
-//                    notifyDataSetChanged();
-//                }
-//            }
-//        });
-
 
         final Social m = data.get(position);
         holder.emailView.setText(m.email);
@@ -80,7 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
         if (position == focusedItemIndex) {
             ((TextView) holder.container.findViewById(R.id.descriptionView)).setText(m.description);
         }
-//        myUserRef.child(mAuth.getCurrentUser().getUid()).keepSynced(true);
+
         myUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,22 +83,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
             }
         });
 
-//        holder.interestCheckView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                String user = mAuth.getCurrentUser().getUid();
-//                if(isChecked){
-//                    m.interest = m.interest + 1;
-//                }else{
-//                    m.interest = m.interest - 1;
-//                }
-//                ref.child(m.firebaseImageUrl).child("interest").setValue(m.interest);
-//                String key = myUserRef.push().getKey();
-//                myUserRef.child(key).setValue(m.firebaseImageUrl);
-//                notifyDataSetChanged();
-//            }
-//        });
-
         holder.interestCheckView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +98,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
                     ref.child(m.firebaseImageUrl).child("interest").setValue(m.interest);
                     myUserRef.child(m.firebaseImageUrl).removeValue();
                 }
-//                String key = myUserRef.push().getKey();
                 notifyDataSetChanged();
             }
         });
@@ -200,19 +167,5 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
 
 
         }
-//    }
-//    // sparse boolean array for checking the state of the items
-//    private SparseBooleanArray itemStateArray= new SparseBooleanArray();
-//
-//    @Override
-//    public void onClick(View v) {
-//        int adapterPosition = getAdapterPosition();
-//        if (!itemStateArray.get(adapterPosition, false)) {
-//            ((TextView) v.findViewById(R.id.interestCheckView)).setChecked(true);
-//            itemStateArray.put(adapterPosition, true);
-//        } else {
-//            ((TextView) v.findViewById(R.id.interestCheckView)).setChecked(false);
-//            itemStateArray.put(adapterPosition, false);
-//        }
     }
 }
